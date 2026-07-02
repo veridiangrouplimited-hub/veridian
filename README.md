@@ -1,5 +1,14 @@
 # Veridian Limited — Website (v2)
 
+> **This is the Eleventy version.** Blog posts and case studies are
+> markdown content built at deploy time (`content/blog/`,
+> `content/case-studies/`, `.eleventy.js`) — no WordPress dependency,
+> real per-page SEO tags. For the older WordPress-integrated version
+> — live client-side fetch from a WordPress.com backend — see
+> [veridian-wordpress](https://github.com/veridiangrouplimited-hub/veridian-wordpress).
+> Both repos otherwise share the same site content and design as of
+> 2026-07-02; only the blog/case-study data pipeline differs.
+
 A multi-page, light-themed magazine-style website for an online private practice serving Nigerian SMEs with ethical digital audits, website redesign, SEO and Google Business work.
 
 > Tagline: **Nothing escapes notice.**
