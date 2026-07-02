@@ -1,4 +1,4 @@
-# Veridian Group Limited — Project Handoff Notes
+# Veridian Limited — Project Handoff Notes
 
 Context for picking this project up in Claude Code. Written after an extended
 chat session that built and refined the site and WordPress tooling. This file
@@ -8,7 +8,7 @@ exists so the reasoning behind non-obvious decisions isn't lost in the move.
 
 ## What this project is
 
-**Veridian Group Limited** — a digital advisory practice in Abuja, Nigeria.
+**Veridian Limited** — a digital advisory practice in Abuja, Nigeria.
 Founder & CEO: Segun Dairo. Tagline: "Nothing escapes notice."
 
 Two deliverables live here:
@@ -286,8 +286,8 @@ remove it.
 - **Domain confirmation** — all canonical URLs, sitemap, and JSON-LD assume
   `veridian.ng`. Confirm this matches the live Netlify domain before launch,
   or do a global find/replace if it differs.
-- **Logo format** — only PNG logos exist (`veridian-group-horizontal.png`,
-  `veridian-group-full.png`). No SVG master exists. Fine for web use at
+- **Logo format** — only PNG logos exist (`veridian-limited-mark.png`,
+  `veridian-limited-full.png`). No SVG master exists. Fine for web use at
   current resolution; would need a vector trace for print/signage.
 
 ---

@@ -8,7 +8,7 @@
 
 /* =================== 1. DESIGN TOKENS =================== */
 :root {
-  /* Light theme — Veridian Group: warm cream base, navy + gold brand */
+  /* Light theme — Veridian Limited: warm cream base, navy + gold brand */
   --bone:        #FBF7EE;
   --cream:       #FFFDF7;
   --white:       #FFFFFF;
@@ -19,13 +19,13 @@
   --hairline:    #E4DCC4;
   --hairline-2:  #D0C7AC;
 
-  /* Primary brand — Veridian Group Navy */
+  /* Primary brand — Veridian Limited Navy */
   --terracotta:      #142B4D;
   --terracotta-soft: #C5CFDF;
   --terracotta-tint: #E0E5EE;
   --terracotta-deep: #0A1B33;
 
-  /* Secondary brand — Veridian Group Gold */
+  /* Secondary brand — Veridian Limited Gold */
   --mustard:     #B89039;
   --mustard-soft:#E2CB7B;
   --mustard-tint:#F5EBD3;
@@ -40,7 +40,7 @@
 
   --font-display: "Fraunces", "Georgia", serif;
   --font-body:    "Manrope", system-ui, sans-serif;
-  --font-hand:    "Caveat", cursive;
+  --font-hand:    "Caveat", "Segoe Print", "Bradley Hand", cursive;
   --font-mono:    "JetBrains Mono", ui-monospace, monospace;
 
   --s-1: .25rem; --s-2: .5rem;  --s-3: .75rem; --s-4: 1rem;
@@ -51,6 +51,7 @@
   --container-narrow: 920px;
   --radius-sm: 8px;
   --radius:    14px;
+  --radius-md: 10px;
   --radius-lg: 22px;
   --radius-xl: 32px;
 
@@ -62,6 +63,19 @@
   --shadow-sm: 0 1px 2px rgba(14,26,46,.06), 0 2px 4px rgba(14,26,46,.04);
   --shadow:    0 4px 16px rgba(14,26,46,.06), 0 12px 32px rgba(14,26,46,.05);
   --shadow-lg: 0 12px 32px rgba(14,26,46,.08), 0 24px 64px rgba(14,26,46,.08);
+}
+
+/* Dark-mode legibility: navy accents are invisible on the dark navy
+   background — swap the handwritten/italic accents to soft gold. */
+[data-theme="dark"] .hand,
+[data-theme="dark"] .handwritten-note,
+[data-theme="dark"] .footer-tagline,
+[data-theme="dark"] .hero-note svg,
+[data-theme="dark"] .hero-headline em {
+  color: var(--mustard-soft);
+}
+[data-theme="dark"] .underline-it {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M0 4 Q15 0 30 4 T60 4 T90 4 T120 4' stroke='%23B89039' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 [data-theme="dark"] {
@@ -310,6 +324,8 @@ strong { color: var(--ink); font-weight: 600; }
 .btn-sm { padding: var(--s-2) var(--s-4); font-size: .875rem; }
 .btn-lg { padding: var(--s-4) var(--s-6); font-size: 1rem; }
 .btn-block { width: 100%; }
+.btn-icon-mobile { display: none; }
+@media (max-width: 800px) { .btn-icon-mobile { display: block; } }
 
 input, textarea, select {
   width: 100%;
@@ -362,34 +378,50 @@ select {
 .brand {
   display: inline-flex;
   align-items: center;
+  gap: 12px;
   transition: opacity var(--t-fast);
 }
-.brand img {
-  height: 72px;
+.brand-mark-img {
+  height: 48px;
   width: auto;
   display: block;
   transition: transform var(--t-fast);
 }
-/* Dark mode: subtle halo so transparent logo reads on dark header */
-[data-theme="dark"] .brand img {
-  filter: drop-shadow(0 0 6px rgba(255,255,255,.08));
+.brand:hover .brand-mark-img { transform: scale(1.05); }
+.brand-text { display: flex; flex-direction: column; line-height: 1; }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
-.brand:hover img { transform: scale(1.03); }
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: .58rem;
+  letter-spacing: .52em;
+  text-transform: uppercase;
+  color: var(--mustard);
+  margin-top: 4px;
+}
 
 /* Footer logo */
-.footer-brand .brand img { height: 88px; }
+.footer-brand .brand-mark-img { height: 56px; }
+.footer-brand .brand-name { font-size: 1.45rem; }
 
 @media (max-width: 900px) {
-  .brand img { height: 60px; }
-  .footer-brand .brand img { height: 72px; }
+  .brand-mark-img { height: 42px; }
+  .footer-brand .brand-mark-img { height: 48px; }
 }
 @media (max-width: 600px) {
-  .brand img { height: 52px; }
-  .footer-brand .brand img { height: 60px; }
+  .brand-mark-img { height: 38px; }
+  .brand-name { font-size: 1.08rem; }
+  .brand-sub { letter-spacing: .4em; font-size: .54rem; }
 }
 
-/* Dark theme: brighten the navy logo so it remains visible on dark backgrounds */
-[data-theme="dark"] .brand img {
+/* Dark theme: white silhouette so the navy mark reads on dark backgrounds */
+[data-theme="dark"] .brand-mark-img {
   filter: brightness(0) invert(1) opacity(.92);
 }
 
@@ -794,132 +826,6 @@ select {
 .audit-step:nth-child(4) .audit-step-icon { color: var(--berry); }
 .audit-step h3 { font-size: 1.2rem; margin-bottom: var(--s-3); font-weight: 500; }
 .audit-step p { font-size: .92rem; color: var(--muted); margin: 0; }
-
-
-/* =================== 12. AUDIT TOOL =================== */
-.audit-tool {
-  background: var(--white);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-xl);
-  padding: var(--s-7);
-  box-shadow: var(--shadow);
-  max-width: 760px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-.audit-tool::before {
-  content: "";
-  position: absolute;
-  top: 0; right: 0;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, var(--terracotta-tint), transparent 70%);
-  border-radius: 50%;
-  transform: translate(40%, -40%);
-  pointer-events: none;
-}
-.audit-tool::after {
-  content: "";
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, var(--sage-tint), transparent 70%);
-  border-radius: 50%;
-  transform: translate(-40%, 40%);
-  pointer-events: none;
-}
-.audit-tool > * { position: relative; z-index: 1; }
-
-.audit-tool-head { text-align: center; margin-bottom: var(--s-6); }
-.audit-tool-head h3 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: var(--s-2); font-weight: 500; }
-.audit-tool-head p { color: var(--muted); max-width: 48ch; margin: 0 auto; }
-
-.audit-form { display: flex; gap: var(--s-3); margin-bottom: var(--s-4); }
-.audit-form input { flex: 1; padding: var(--s-4) var(--s-5); font-size: 1rem; border-radius: 999px; }
-.audit-form button { border-radius: 999px; white-space: nowrap; }
-@media (max-width: 600px) { .audit-form { flex-direction: column; } }
-
-.audit-tool-disclaimer { text-align: center; font-size: .8rem; color: var(--muted); }
-
-.audit-results {
-  display: none;
-  margin-top: var(--s-6);
-  padding: var(--s-5);
-  background: var(--bone);
-  border-radius: var(--radius-lg);
-  border: 1px dashed var(--hairline-2);
-}
-.audit-results.show { display: block; animation: slideUp .6s var(--ease); }
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.audit-results-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--s-5);
-  padding-bottom: var(--s-4);
-  border-bottom: 1px solid var(--hairline);
-  gap: var(--s-4);
-  flex-wrap: wrap;
-}
-.audit-results-domain {
-  font-family: var(--font-mono);
-  font-size: .95rem;
-  color: var(--ink);
-  word-break: break-all;
-}
-.audit-results-score {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--terracotta);
-}
-.audit-results-score sup { font-size: .35em; color: var(--muted); }
-
-.audit-metrics { display: grid; gap: var(--s-2); margin-bottom: var(--s-5); }
-.audit-metric {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-3) var(--s-4);
-  background: var(--white);
-  border-radius: var(--radius);
-}
-.audit-metric-name {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  font-size: .9rem;
-  color: var(--ink);
-}
-.audit-metric-status {
-  display: inline-grid;
-  place-items: center;
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  font-size: .75rem;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-.audit-metric-status--bad  { background: var(--terracotta-tint); color: var(--terracotta-deep); }
-.audit-metric-status--warn { background: var(--mustard-tint); color: #8A6919; }
-.audit-metric-status--good { background: var(--sage-tint); color: var(--sage); }
-.audit-metric-val { font-family: var(--font-mono); font-size: .85rem; color: var(--muted); }
-
-.audit-results-cta {
-  text-align: center;
-  padding: var(--s-4);
-  background: var(--terracotta-tint);
-  border-radius: var(--radius);
-  font-size: .92rem;
-}
-.audit-results-cta strong { color: var(--terracotta-deep); }
-.audit-results-cta a { color: var(--terracotta-deep); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 
 /* =================== 13. CASE STUDIES =================== */
@@ -1712,6 +1618,18 @@ select {
   transition: opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease);
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+.skeleton-block {
+  background: linear-gradient(90deg, var(--soft) 25%, var(--hairline) 50%, var(--soft) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--s-3);
+}
+@keyframes skeleton-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 .reveal:nth-child(2) { transition-delay: 80ms; }
 .reveal:nth-child(3) { transition-delay: 160ms; }
 .reveal:nth-child(4) { transition-delay: 240ms; }
@@ -1750,6 +1668,18 @@ select {
   .site-nav a::after { display: none; }
   .nav-toggle { display: flex; }
 }
+
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 26, 46, 0.45);
+  z-index: 98;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+.nav-backdrop.open { display: block; }
 @media (max-width: 800px) {
   body { font-size: 16px; }
   .hero { padding: var(--s-8) 0; }
@@ -2581,12 +2511,6 @@ select {
   max-width: 72ch;
 }
 .audit-scope-note a { color: var(--terracotta); font-weight: 500; }
-
-/* ===== Remove dead audit-tool styles (kept here as comment for reference) =====
-   The .audit-tool, .audit-form, .audit-results, .audit-metric* classes are no
-   longer used in markup. CSS left in place to avoid larger restyle, but the
-   classes will not appear in any rendered page. Safe to delete in a future pass.
-*/
 
 /* ===== Legal pages (privacy, terms) ===== */
 .legal-copy {

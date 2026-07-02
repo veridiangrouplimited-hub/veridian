@@ -1,4 +1,4 @@
-# Veridian Group Limited — Website (v2)
+# Veridian Limited — Website (v2)
 
 A multi-page, light-themed magazine-style website for an online private practice serving Nigerian SMEs with ethical digital audits, website redesign, SEO and Google Business work.
 
@@ -123,7 +123,7 @@ Search-and-replace these placeholders globally:
 
 | Placeholder | Replace with |
 |---|---|
-| `Veridian Group Limited` | Your final brand name |
+| `Veridian Limited` | Your final brand name |
 | `veridian-group.com` | Your domain |
 | `hello@veridian-group.com` | Your contact email |
 | `+234 000 000 0000` | Your phone number |
@@ -244,7 +244,7 @@ For privacy-first alternatives consider [Plausible](https://plausible.io) or [Fa
 
 ## WordPress headless — already wired
 
-The blog index (`blog.html`) and single-post template (`blog-post.html`) **already fetch live content** from the Veridian Group WordPress site:
+The blog index (`blog.html`) and single-post template (`blog-post.html`) **already fetch live content** from the Veridian Limited WordPress site:
 
 ```
 https://veridian-grouplimited.wordpress.com

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Veridian Group Limited — script.js
+   Veridian Limited — script.js
    Mobile nav · theme toggle · scroll behaviour · reveal-on-scroll
    Animated counters · FAQ accordion · contact form · newsletter
    Interactive mini-audit tool · cookie banner · year stamp
@@ -63,28 +63,34 @@
     var nav = document.querySelector(".site-nav");
     if (!toggle || !nav) return;
 
+    var backdrop = document.createElement("div");
+    backdrop.className = "nav-backdrop";
+    document.body.insertBefore(backdrop, document.body.firstChild);
+
+    function closeNav() {
+      nav.classList.remove("open");
+      backdrop.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
     toggle.addEventListener("click", function () {
       var open = nav.classList.toggle("open");
+      backdrop.classList.toggle("open", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
       document.body.style.overflow = open ? "hidden" : "";
     });
 
+    backdrop.addEventListener("click", closeNav);
+
     // Close on link click
     nav.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        nav.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-      });
+      a.addEventListener("click", closeNav);
     });
 
     // Close on Escape
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && nav.classList.contains("open")) {
-        nav.classList.remove("open");
-        toggle.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
-      }
+      if (e.key === "Escape" && nav.classList.contains("open")) closeNav();
     });
   }
 
@@ -415,15 +421,26 @@
     var KEY = "veridian-cookie";
     if (localStorage.getItem(KEY)) return;
 
-    setTimeout(function () { banner.classList.add("show"); }, 1500);
+    var wa = document.querySelector(".whatsapp-float");
+
+    function showBanner() {
+      banner.classList.add("show");
+      if (wa) wa.style.bottom = "140px";
+    }
+    function hideBanner() {
+      banner.classList.remove("show");
+      if (wa) wa.style.bottom = "";
+    }
+
+    setTimeout(showBanner, 1500);
 
     banner.querySelector(".cookie-accept").addEventListener("click", function () {
       localStorage.setItem(KEY, "accepted");
-      banner.classList.remove("show");
+      hideBanner();
     });
     banner.querySelector(".cookie-decline").addEventListener("click", function () {
       localStorage.setItem(KEY, "declined");
-      banner.classList.remove("show");
+      hideBanner();
     });
   }
   /* ===== Blog category filter ===== */
@@ -473,7 +490,7 @@
     });
   }
   /* ===== WordPress headless CMS =====
-   * Posts are pulled live from the Veridian Group WordPress blog (public REST API,
+   * Posts are pulled live from the Veridian Limited WordPress blog (public REST API,
    * no auth needed for reading published posts). The static manifest stays as
    * a graceful fallback for when WP is slow/down/firewalled.
    *
@@ -675,9 +692,30 @@
    *   <!--veridian-data:{...JSON...}-->
    * The parser extracts it and renders the before/after layout.
    */
+  function caseStudySkeleton(n) {
+    var article = '<article class="case-detail" aria-hidden="true" style="pointer-events:none">' +
+      '<div class="case-detail-head">' +
+        '<div class="skeleton-block" style="height:20px;width:180px;"></div>' +
+        '<div class="skeleton-block" style="height:32px;margin-top:var(--s-3);"></div>' +
+        '<div class="skeleton-block" style="height:32px;width:90%;"></div>' +
+        '<div class="skeleton-block" style="height:18px;width:70%;margin-top:var(--s-2);"></div>' +
+      '</div>' +
+      '<div class="case-detail-body" style="padding:var(--s-7)">' +
+        '<div class="skeleton-block" style="height:120px;"></div>' +
+      '</div>' +
+    '</article>';
+    var out = "";
+    for (var i = 0; i < n; i++) out += article;
+    return out;
+  }
+
   function fetchCaseStudies() {
     var grid = document.getElementById("case-studies-grid");
     if (!grid) return;   // only runs on work.html
+
+    // Save static fallback HTML before replacing with skeleton
+    grid._staticFallback = grid.innerHTML;
+    grid.innerHTML = caseStudySkeleton(2);
 
     // Step 1: resolve the 'case-studies' category ID by slug
     wpFetch("/categories?slug=case-studies")
@@ -693,7 +731,8 @@
         renderCaseStudies(grid, studies);
       })
       .catch(function () {
-        // Silent: static fallback articles in work.html stay visible
+        // Restore static fallback articles on WP failure
+        if (grid._staticFallback) grid.innerHTML = grid._staticFallback;
       });
   }
 
@@ -773,11 +812,25 @@
   }
   function escAttr(s) { return escHtml(s); }
 
+  function blogSkeleton(n) {
+    var card = '<div class="blog-card" aria-hidden="true" style="pointer-events:none">' +
+      '<div class="skeleton-block" style="width:56px;height:32px;"></div>' +
+      '<div class="skeleton-block" style="height:12px;width:72px;margin-top:4px;"></div>' +
+      '<div class="skeleton-block" style="height:22px;margin-top:var(--s-3);"></div>' +
+      '<div class="skeleton-block" style="height:22px;width:85%;"></div>' +
+      '<div class="skeleton-block" style="height:14px;width:55%;margin-top:var(--s-3);"></div>' +
+      '</div>';
+    var out = "";
+    for (var i = 0; i < n; i++) out += card;
+    return out;
+  }
+
   /* ===== Blog index — live posts from WP ===== */
   function fetchBlogPosts() {
     var grid = document.querySelector(".blog-grid");
     if (!grid || document.getElementById("posts-manifest")) return;
     // Only run on the blog index (which has the .blog-grid but no posts-manifest)
+    grid.innerHTML = blogSkeleton(6);
     grid.classList.add("is-loading");
 
     // Resolve 'blog' category first so case studies are never mixed in
