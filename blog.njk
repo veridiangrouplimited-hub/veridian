@@ -1,0 +1,60 @@
+---
+layout: base.njk
+permalink: /blog/index.html
+activeNav: blog
+title: "Blog"
+description: "Practical pieces about getting Nigerian businesses found, trusted, and chosen online. No tricks — just the work."
+---
+{% import "blog-card.njk" as cards %}
+{% set posts = collections.post %}
+{% set tally = posts | categoryTally %}
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--berry">The Quiet Letter</span>
+    <h1>Notes from <span class="hand">a careful practice.</span></h1>
+    <p>Short, practical pieces about getting Nigerian businesses found, trusted, and chosen online. No tricks, no hot takes — just the work.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="blog-filters reveal">
+      <button class="blog-chip active" data-cat="all">All <span class="blog-chip-count">{{ posts.length }}</span></button>{% for c in tally %}<button class="blog-chip" data-cat="{{ c.name }}">{{ c.name }} <span class="blog-chip-count">{{ c.count }}</span></button>{% endfor %}
+    </div>
+
+    <div class="blog-grid reveal">
+      {% for p in posts %}
+        {{ cards.card(p, loop.index, loop.first) }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="section">
+  <div class="container narrow">
+    <div class="newsletter reveal">
+      <h3>The Quiet Letter — once a month.</h3>
+      <p>One thoughtful note a month &mdash; plus the free 10-point self-audit checklist (PDF) the moment you join. Unsubscribe anytime.</p>
+      <form class="newsletter-form"
+            name="veridian-group-newsletter"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="veridian-group-newsletter" />
+        <input type="hidden" name="_subject" value="New subscriber — The Quiet Letter" />
+        <input type="hidden" name="lead_magnet" value="self-audit-checklist" />
+        <input type="hidden" name="utm_source" />
+        <input type="hidden" name="utm_medium" />
+        <input type="hidden" name="utm_campaign" />
+        <input type="hidden" name="industry" />
+        <p class="visually-hidden" aria-hidden="true">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+        <input type="email" name="email" placeholder="you@business.ng" required />
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>

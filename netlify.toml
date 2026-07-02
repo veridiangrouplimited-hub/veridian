@@ -1,9 +1,10 @@
 # Netlify configuration — Veridian Limited
-# Static site, no build step required.
+# Eleventy builds the blog + case studies from markdown at deploy time;
+# every other page is plain hand-authored HTML, passed through unchanged.
 
 [build]
-  # The site is pre-built HTML/CSS/JS — Netlify just serves the root directory.
-  publish = "."
+  command = "npm run build"
+  publish = "_site"
 
 [build.processing]
   skip_processing = false
@@ -21,6 +22,31 @@
 
 [build.processing.images]
   compress = true
+
+# Backward compatibility for the old WordPress-fetch-era URLs, now that
+# the blog and case studies are pre-built by Eleventy at /blog/ and /work/.
+# The query-matching rule must come before the plain fallback so a slug
+# is preferred when present.
+[[redirects]]
+  from = "/blog-post.html"
+  to = "/blog/:post/"
+  status = 301
+  query = { post = ":post" }
+
+[[redirects]]
+  from = "/blog-post.html"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/blog.html"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/work.html"
+  to = "/work/"
+  status = 301
 
 # First-party proxy for Umami analytics.
 # Blocklists (EasyPrivacy, Opera's built-in blocker) match the

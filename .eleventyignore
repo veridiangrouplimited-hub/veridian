@@ -1,0 +1,12 @@
+_wp-scripts/
+scripts/
+README.md
+PROJECT_NOTES.md
+node_modules/
+package.json
+package-lock.json
+.gitignore
+.gitattributes
+.eleventyignore
+.eleventy.js
+_site/

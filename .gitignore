@@ -2,3 +2,7 @@
 .claude/
 __pycache__/
 *.pyc
+
+# Eleventy build output and dependencies — Netlify builds these fresh
+node_modules/
+_site/

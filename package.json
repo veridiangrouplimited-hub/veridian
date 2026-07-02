@@ -1,0 +1,13 @@
+{
+  "name": "veridian-ng",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Veridian Limited website — Eleventy builds the blog and case studies from markdown; every other page is passed through unchanged.",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

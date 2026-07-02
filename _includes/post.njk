@@ -1,0 +1,114 @@
+---
+layout: base.njk
+activeNav: blog
+---
+{% import "blog-card.njk" as cards %}
+{% set shareUrl = "https://veridian.ng" + page.url %}
+{% set shareTitle = title + " — Veridian" %}
+
+<!-- Post hero -->
+<section class="post-hero">
+  <div class="container">
+    <a href="/blog/" class="post-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to The Quiet Letter
+    </a>
+
+    <div class="post-meta">
+      <span class="post-meta-category">{{ category }}</span>
+      <span class="post-meta-dot"></span>
+      <span>{{ date | friendlyDate }}</span>
+      <span class="post-meta-dot"></span>
+      <span>{{ read_time }}</span>
+    </div>
+
+    <h1 class="post-title">{{ title }}</h1>
+    <p class="post-lede">{{ excerpt }}</p>
+
+    <div class="post-author">
+      <div class="post-author-avatar">V</div>
+      <div class="post-author-info">
+        <span class="post-author-name">The Practice</span>
+        <span class="post-author-role">Veridian</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured image hero -->
+<div class="container">
+  <figure class="post-cover">
+    <img src="{{ image }}" alt="{{ image_alt }}" loading="eager" />
+  </figure>
+</div>
+
+<!-- Article body -->
+<article class="container">
+  <div class="post-body">
+    <div id="post-content">
+      {{ content | safe }}
+    </div>
+  </div>
+</article>
+
+<!-- Share row -->
+<div class="container">
+  <div class="post-share">
+    <span class="post-share-label">Share this article</span>
+    <div class="post-share-buttons">
+      <a href="https://x.com/intent/tweet?text={{ shareTitle | urlencode }}&url={{ shareUrl | urlencode }}" target="_blank" rel="noopener" class="post-share-btn" aria-label="Share on X">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ shareUrl | urlencode }}&title={{ shareTitle | urlencode }}" target="_blank" rel="noopener" class="post-share-btn" aria-label="Share on LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45zM5.34 7.43c-1.14 0-2.06-.93-2.06-2.06s.92-2.06 2.06-2.06 2.06.92 2.06 2.06-.92 2.06-2.06 2.06zm1.78 13.02H3.56V9h3.56v11.45z"/></svg>
+      </a>
+      <a href="https://wa.me/?text={{ (shareTitle + " " + shareUrl) | urlencode }}" class="post-share-btn" aria-label="Share on WhatsApp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+      </a>
+      <button class="post-share-btn" aria-label="Copy link" onclick="navigator.clipboard && navigator.clipboard.writeText(window.location.href)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Author card -->
+<div class="container">
+  <div class="post-author-card">
+    <div class="post-author-card-avatar">V</div>
+    <div class="post-author-card-bio">
+      <h4>The Practice</h4>
+      <p>Veridian is a founder-led practice helping Nigerian SMEs close the gap between how strong their business is and how they show up online. Honest audits, sharp websites, AI applied with judgment.</p>
+      <a href="/about.html">More about the practice <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<!-- Related posts -->
+<section class="section" style="margin-top: var(--s-8);">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow eyebrow--sage">Keep reading</span>
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 500;">Other notes from the practice</h2>
+    </div>
+    <div class="blog-grid" id="related-grid">
+      {% for p in collections.post | excludeSlug(page.fileSlug) %}
+        {{ cards.card(p, loop.index, false) }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container narrow">
+    <div class="cta-block reveal">
+      <h2>Curious where you'd score?</h2>
+      <p>Free 48-hour snapshot. Public-data only. No sales call required.</p>
+      <div class="cta-block-actions">
+        <a href="/contact.html" class="btn btn-terracotta btn-lg">Request free snapshot <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="/audit.html" class="btn btn-ghost btn-lg">Read the method</a>
+      </div>
+    </div>
+  </div>
+</section>

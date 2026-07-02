@@ -914,6 +914,7 @@ select {
   border: 1px solid var(--hairline);
   margin-bottom: var(--s-6);
 }
+.case-narrative p:last-child { margin-bottom: 0; }
 .case-detail-head {
   padding: var(--s-7);
   background: var(--cream);

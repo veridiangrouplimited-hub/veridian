@@ -1,0 +1,64 @@
+---
+layout: base.njk
+permalink: /work/index.html
+activeNav: work
+title: "Case Studies"
+description: "Real before/after results from Nigerian SMEs we've worked with: short-lets, law firms, schools, logistics."
+---
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow eyebrow--berry">Case studies</span>
+    <h1>Quiet work. <span class="underline-it--mustard">Loud results.</span></h1>
+    <p>A small selection of what happens when a Nigerian SME stops being invisible online. Real before/after scores. Real numbers. Real businesses (names lightly anonymised where requested).</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" id="case-studies-grid">
+    {% for cs in collections.caseStudy %}
+    <article class="case-detail reveal">
+      <div class="case-detail-head">
+        <span class="eyebrow eyebrow--sage">{{ cs.data.industry }} &middot; {{ cs.data.location }}</span>
+        <h3>{{ cs.data.tagline }}</h3>
+        <div class="case-narrative" style="max-width: 60ch; margin-top: var(--s-3);">{{ cs.templateContent | safe }}</div>
+      </div>
+      <div class="case-image" style="aspect-ratio: 21/9;">
+        <img src="{{ cs.data.image }}" alt="{{ cs.data.image_alt }}" loading="lazy" />
+      </div>
+      <div class="case-detail-body">
+        <div class="case-detail-comparison">
+          <div class="case-side case-side--before">
+            <span class="case-side-label">Before</span>
+            <div class="case-side-score">{{ cs.data.before_score }}<sup>/100</sup></div>
+            <ul>
+              {% for item in cs.data.before %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+          </div>
+          <div class="case-comparison-arrow">&rarr;</div>
+          <div class="case-side case-side--after">
+            <span class="case-side-label">After</span>
+            <div class="case-side-score">{{ cs.data.after_score }}<sup>/100</sup></div>
+            <ul>
+              {% for item in cs.data.after %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section--cream">
+  <div class="container narrow">
+    <div class="cta-block reveal">
+      <span class="eyebrow">Want to be next?</span>
+      <h2>Let's find your <em>before number.</em></h2>
+      <p>The free snapshot tells you exactly where you stand. Then you decide whether the after number is worth the work.</p>
+      <div class="cta-block-actions">
+        <a href="/contact.html" class="btn btn-terracotta btn-lg">Request free snapshot <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        <a href="/audit.html" class="btn btn-ghost btn-lg">See our method</a>
+      </div>
+    </div>
+  </div>
+</section>

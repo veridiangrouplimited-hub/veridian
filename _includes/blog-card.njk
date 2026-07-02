@@ -1,0 +1,15 @@
+{% macro card(post, index, isFeatured) %}
+{% set numStr = index | zeropad(2) %}
+<a href="/blog/{{ post.fileSlug }}/" class="blog-card{% if isFeatured %} is-featured{% endif %}" data-category="{{ post.data.category }}" data-post="{{ post.fileSlug }}">
+  <span class="blog-card-watermark" aria-hidden="true">{{ numStr }}</span>
+  <span class="blog-card-num"><sup>№</sup>{{ numStr }}</span>
+  <span class="blog-card-rule" aria-hidden="true"></span>
+  <span class="blog-card-category">{{ post.data.category }}</span>
+  <h3>{{ post.data.title }}</h3>
+  <p>{{ post.data.excerpt }}</p>
+  <div class="blog-card-foot">
+    <span>{{ post.data.date | friendlyDate }} &middot; {{ post.data.read_time }}</span>
+    <span class="blog-card-link">{% if isFeatured %}Read the cover article{% else %}Read{% endif %} <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+  </div>
+</a>
+{% endmacro %}
