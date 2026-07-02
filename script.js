@@ -398,6 +398,13 @@
             if (!resp.ok) throw new Error("HTTP " + resp.status);
             if (btn) btn.textContent = "Thanks!";
             form.reset();
+            // Lead magnet: deliver the self-audit checklist on subscribe
+            var dl = document.createElement("a");
+            dl.href = "assets/downloads/veridian-self-audit-checklist.pdf";
+            dl.download = "veridian-self-audit-checklist.pdf";
+            document.body.appendChild(dl);
+            dl.click();
+            dl.remove();
           })
           .catch(function () {
             if (btn) btn.textContent = "Try again";
