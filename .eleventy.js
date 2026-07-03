@@ -5,10 +5,10 @@ const MONTHS = [
 
 module.exports = function (eleventyConfig) {
   // Only these two content types are templated. Every other page on the
-  // site (index.html, about.html, services.html, pricing.html,
-  // contact.html, audit.html, privacy.html, 404.html) stays hand-authored
-  // flat HTML and is passed through unchanged below — this migration is
-  // scoped to the blog/case-study pipeline only.
+  // site (index.html, about.html, services.html, software.html,
+  // pricing.html, contact.html, audit.html, privacy.html, 404.html) stays
+  // hand-authored flat HTML and is passed through unchanged below — this
+  // migration is scoped to the blog/case-study pipeline only.
   eleventyConfig.setTemplateFormats(["njk", "md"]);
 
   // Static assets and untouched pages — copied byte-for-byte into _site/.
@@ -22,6 +22,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("index.html");
   eleventyConfig.addPassthroughCopy("about.html");
   eleventyConfig.addPassthroughCopy("services.html");
+  eleventyConfig.addPassthroughCopy("software.html");
   eleventyConfig.addPassthroughCopy("pricing.html");
   eleventyConfig.addPassthroughCopy("contact.html");
   eleventyConfig.addPassthroughCopy("audit.html");
